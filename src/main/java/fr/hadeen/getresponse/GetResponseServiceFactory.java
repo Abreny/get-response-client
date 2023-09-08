@@ -7,6 +7,8 @@ import fr.hadeen.getresponse.services.campaign.CampaignService;
 import fr.hadeen.getresponse.services.campaign.CampaignServiceImpl;
 import fr.hadeen.getresponse.services.contact.ContactService;
 import fr.hadeen.getresponse.services.contact.ContactServiceImpl;
+import fr.hadeen.getresponse.services.contact.TransferContactService;
+import fr.hadeen.getresponse.services.contact.TransferContactServiceImpl;
 import org.springframework.web.client.RestTemplate;
 
 public class GetResponseServiceFactory implements GetResponseServiceFactoryInterface {
@@ -33,5 +35,10 @@ public class GetResponseServiceFactory implements GetResponseServiceFactoryInter
     @Override
     public ContactService getContactService() {
         return new ContactServiceImpl(responseClient);
+    }
+
+    @Override
+    public TransferContactService getTransferContactService() {
+        return new TransferContactServiceImpl(this);
     }
 }

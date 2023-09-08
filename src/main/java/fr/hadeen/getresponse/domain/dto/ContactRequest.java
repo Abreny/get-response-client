@@ -11,19 +11,7 @@ public class ContactRequest {
     private CampaignId campaign;
     private String email;
 
-    private String dayOfCycle;
-
-    private Double scoring;
-
-    private String ipAddress;
-
-    private List<NewContactTagId> tags = new ArrayList<>();
-
     private List<CustomFieldWithValue> customFieldValues = new ArrayList<>();
-
-    public ContactRequest() {
-
-    }
 
     public ContactRequest(String email, CampaignId campaign) {
         this.email = email;
@@ -52,38 +40,6 @@ public class ContactRequest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getDayOfCycle() {
-        return dayOfCycle;
-    }
-
-    public void setDayOfCycle(String dayOfCycle) {
-        this.dayOfCycle = dayOfCycle;
-    }
-
-    public Double getScoring() {
-        return scoring;
-    }
-
-    public void setScoring(Double scoring) {
-        this.scoring = scoring;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
-    public List<NewContactTagId> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<NewContactTagId> tags) {
-        this.tags = tags;
     }
 
     public List<CustomFieldWithValue> getCustomFieldValues() {

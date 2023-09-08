@@ -6,6 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 public class GetResponseClient implements GetResponseClientInteface {
     private final GetResponseConfigurationInterface configuration;
@@ -29,6 +30,10 @@ public class GetResponseClient implements GetResponseClientInteface {
     @Override
     public <R> R get(String path, Class<R> responseType) throws URISyntaxException {
         return requestWithoutData(path, HttpMethod.GET, responseType);
+    }
+    @Override
+    public <R> R search(String path, Map<String, ?> data, Class<R> responseType) throws URISyntaxException {
+        return requestWithQuery(path, data, HttpMethod.GET, responseType);
     }
 
     @Override
@@ -64,6 +69,18 @@ public class GetResponseClient implements GetResponseClientInteface {
                 method,
                 requestEntity,
                 responseType
+        );
+        return response.getBody();
+    }
+
+    private <T, R> R requestWithQuery(String path, Map<String, ?> parameters, HttpMethod method, Class<R> responseType) throws URISyntaxException {
+        HttpEntity<T> requestEntity = getRequestEntity(null);
+        ResponseEntity<R> response = restTemplate.exchange(
+                configuration.getBaseUrl() + path,
+                method,
+                requestEntity,
+                responseType,
+                parameters
         );
         return response.getBody();
     }
