@@ -3,6 +3,7 @@ package fr.hadeen.getresponse.services;
 import fr.hadeen.getresponse.config.GetResponseConfigurationInterface;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -74,14 +75,16 @@ public class GetResponseClient implements GetResponseClientInteface {
     }
 
     private <T, R> R requestWithQuery(String path, Map<String, ?> parameters, HttpMethod method, Class<R> responseType) throws URISyntaxException {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(configuration.getBaseUrl() + path);
+        parameters.forEach(builder::queryParam);
         HttpEntity<T> requestEntity = getRequestEntity(null);
         ResponseEntity<R> response = restTemplate.exchange(
-                configuration.getBaseUrl() + path,
+                builder.build().toUriString(),
                 method,
                 requestEntity,
-                responseType,
-                parameters
+                responseType
         );
+
         return response.getBody();
     }
 }

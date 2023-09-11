@@ -19,10 +19,9 @@ public class TransferContactServiceImpl implements TransferContactService {
     public void transferContact(String campaignId, ContactRequest contactRequest) throws URISyntaxException {
         final ContactService contactService = getResponseServiceFactory.getContactService();
         SearchRequest request = new SearchRequest();
-        request.addQuery("email", contactRequest.getEmail())
-            .addQuery("campaignId", campaignId);
+        request.addQuery("email", contactRequest.getEmail());
+        request.addQuery("campaignId", campaignId);
         final List<Contact> contacts = contactService.getAllContacts(request);
-        System.out.println("FOIUND: " + contacts.size());
         if (!contacts.isEmpty()) {
             contactService.deleteContactById(contacts.get(0).getContactId());
         }

@@ -1,5 +1,6 @@
 package fr.hadeen.getresponse.services.contact;
 
+import fr.hadeen.getresponse.domain.Autoresponder;
 import fr.hadeen.getresponse.domain.Contact;
 
 import fr.hadeen.getresponse.domain.dto.ContactRequest;
@@ -7,6 +8,7 @@ import fr.hadeen.getresponse.domain.dto.SearchRequest;
 import fr.hadeen.getresponse.services.GetResponseClientInteface;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,10 +42,12 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public List<Contact> getAllContacts(SearchRequest request) throws URISyntaxException {
-        if (request == null) {
-            final Contact[] contacts = responseClient.search("/contacts", request.formatQueryParameters(), Contact[].class);
+        Contact[] contacts;
+        if (request != null) {
+            contacts = responseClient.search("/contacts", request.formatQueryParameters(), Contact[].class);
+            return Arrays.asList(contacts);
         }
-        final Contact[] contacts = responseClient.get("/contacts", Contact[].class);
+        contacts = responseClient.get("/contacts", Contact[].class);
         return Arrays.asList(contacts);
     }
 }
