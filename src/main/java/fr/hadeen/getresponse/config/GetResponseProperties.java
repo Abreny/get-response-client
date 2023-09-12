@@ -1,7 +1,7 @@
 package fr.hadeen.getresponse.config;
 public class GetResponseProperties implements GetResponseConfigurationInterface {
-    private String baseUrl = "https://api.getresponse.com/v3"; // GetResponse API base URL
-    private String apiKey; //"api-key uws9s9019nz5dtdeief7pedq6zbt9nz4";
+    private String baseUrl = "https://api.getresponse.com/v3";
+    private String apiKey;
 
     @Override
     public String getApiKey() {

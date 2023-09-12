@@ -10,12 +10,13 @@ import fr.hadeen.getresponse.services.contact.ContactServiceImpl;
 import fr.hadeen.getresponse.services.contact.TransferContactService;
 import fr.hadeen.getresponse.services.contact.TransferContactServiceImpl;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class GetResponseServiceFactory implements GetResponseServiceFactoryInterface {
     private final GetResponseClientInteface responseClient;
 
-    public GetResponseServiceFactory(RestTemplate restTemplate, String key) {
-        this.responseClient = new GetResponseClient(GetResponseProperties.forKey(key), restTemplate);
+    public GetResponseServiceFactory(RestTemplate restTemplate, UriComponentsBuilder builder, String key) {
+        this.responseClient = new GetResponseClient(GetResponseProperties.forKey(key), restTemplate, builder);
     }
 
     public GetResponseServiceFactory(GetResponseClientInteface responseClient) {

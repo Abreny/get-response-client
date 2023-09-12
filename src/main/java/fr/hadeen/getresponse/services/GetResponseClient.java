@@ -13,9 +13,12 @@ public class GetResponseClient implements GetResponseClientInteface {
     private final GetResponseConfigurationInterface configuration;
     private final RestTemplate restTemplate;
 
-    public GetResponseClient(GetResponseConfigurationInterface configuration, RestTemplate restTemplate) {
+    private final UriComponentsBuilder uriComponentsBuilder;
+
+    public GetResponseClient(GetResponseConfigurationInterface configuration, RestTemplate restTemplate, UriComponentsBuilder uriComponentsBuilder) {
         this.configuration = configuration;
         this.restTemplate = restTemplate;
+        this.uriComponentsBuilder = uriComponentsBuilder;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class GetResponseClient implements GetResponseClientInteface {
     }
     @Override
     public <R> R search(String path, Map<String, ?> data, Class<R> responseType) throws URISyntaxException {
-        return requestWithQuery(path, data, HttpMethod.GET, responseType);
+        return requestWithQuery(path, data, responseType);
     }
 
     @Override
@@ -74,17 +77,16 @@ public class GetResponseClient implements GetResponseClientInteface {
         return response.getBody();
     }
 
-    private <T, R> R requestWithQuery(String path, Map<String, ?> parameters, HttpMethod method, Class<R> responseType) throws URISyntaxException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(configuration.getBaseUrl() + path);
-        parameters.forEach(builder::queryParam);
+    private <T, R> R requestWithQuery(String path, Map<String, ?> parameters, Class<R> responseType) throws URISyntaxException {
+        uriComponentsBuilder.replacePath(path);
+        parameters.forEach(uriComponentsBuilder::replaceQueryParam);
         HttpEntity<T> requestEntity = getRequestEntity(null);
         ResponseEntity<R> response = restTemplate.exchange(
-                builder.build().toUriString(),
-                method,
+                configuration.getBaseUrl() + uriComponentsBuilder.build().toUriString(),
+                HttpMethod.GET,
                 requestEntity,
                 responseType
         );
-
         return response.getBody();
     }
 }
