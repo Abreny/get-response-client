@@ -14,4 +14,5 @@ public interface ContactService {
     public void deleteContactById(String contactId) throws URISyntaxException;
     public void unsubscribeFromMessage(String contactId, String messageId) throws URISyntaxException;
     public List<Contact> getAllContacts(SearchRequest request) throws URISyntaxException;
+    public Contact findByEmailAndCampaign(String email, String campaignId) throws URISyntaxException;
 }

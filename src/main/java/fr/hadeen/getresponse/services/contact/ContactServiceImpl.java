@@ -1,6 +1,5 @@
 package fr.hadeen.getresponse.services.contact;
 
-import fr.hadeen.getresponse.domain.Autoresponder;
 import fr.hadeen.getresponse.domain.Contact;
 
 import fr.hadeen.getresponse.domain.dto.ContactRequest;
@@ -8,7 +7,6 @@ import fr.hadeen.getresponse.domain.dto.SearchRequest;
 import fr.hadeen.getresponse.services.GetResponseClientInteface;
 
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact updateContact(String contactId, ContactRequest contactRequest) throws URISyntaxException {
-        return responseClient.put("/contacts/" + contactId, contactRequest, Contact.class);
+        return responseClient.post("/contacts/" + contactId, contactRequest, Contact.class);
     }
 
     @Override
@@ -49,5 +47,17 @@ public class ContactServiceImpl implements ContactService {
         }
         contacts = responseClient.get("/contacts", Contact[].class);
         return Arrays.asList(contacts);
+    }
+
+    @Override
+    public Contact findByEmailAndCampaign(String email, String campaignId) throws URISyntaxException {
+        SearchRequest request = new SearchRequest();
+        request.addQuery("email", email);
+        request.addQuery("campaignId", campaignId);
+        final List<Contact> contacts = getAllContacts(request);
+        if (!contacts.isEmpty()) {
+            return contacts.get(0);
+        }
+        return null;
     }
 }

@@ -1,6 +1,5 @@
 package fr.hadeen.getresponse.services.contact;
 
-import fr.hadeen.getresponse.domain.Contact;
 import fr.hadeen.getresponse.domain.dto.ContactRequest;
 
 import java.net.URISyntaxException;

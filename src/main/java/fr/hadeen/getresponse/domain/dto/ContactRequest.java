@@ -1,7 +1,6 @@
 package fr.hadeen.getresponse.domain.dto;
 
 import fr.hadeen.getresponse.domain.dto.ids.CampaignId;
-import fr.hadeen.getresponse.domain.dto.ids.NewContactTagId;
 
 import java.util.ArrayList;
 import java.util.List;
