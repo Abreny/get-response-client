@@ -2,7 +2,6 @@ package fr.hadeen.getresponse.services.campaign;
 
 import fr.hadeen.getresponse.domain.Campaign;
 import fr.hadeen.getresponse.domain.dto.CampaignRequest;
-import org.springframework.http.ResponseEntity;
 
 import java.net.URISyntaxException;
 import java.util.List;

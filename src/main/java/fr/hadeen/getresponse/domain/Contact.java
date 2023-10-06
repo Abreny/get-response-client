@@ -1,6 +1,7 @@
 package fr.hadeen.getresponse.domain;
 
 import java.util.Date;
+
 public class Contact {
     private String contactId;
     private String name;
@@ -128,6 +129,14 @@ public class Contact {
 
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public static enum Origin {

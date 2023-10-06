@@ -60,4 +60,21 @@ public class ContactServiceImpl implements ContactService {
         }
         return null;
     }
+
+    @Override
+    public void resetContact(ContactRequest contactRequest) throws URISyntaxException {
+        final Contact contact = findByEmailAndCampaign(contactRequest.getEmail(), contactRequest.getCampaign().getCampaignId());
+        if (contact != null) {
+            final Runnable r = () -> {
+                try {
+                    deleteContactById(contact.getContactId());
+                    Thread.sleep(10000);
+                    createContact(contactRequest);
+                } catch (URISyntaxException | InterruptedException e) {}
+            };
+            new Thread(r).start();
+        } else {
+            createContact(contactRequest);
+        }
+    }
 }
